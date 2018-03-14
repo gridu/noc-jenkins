@@ -1,0 +1,6 @@
+git:latest
+workflow-aggregator:latest
+job-dsl:latest
+role-strategy:latest
+description-setter:latest
+antisamy-markup-formatter:latest

@@ -1,0 +1,46 @@
+#!/usr/bin/env groovy
+
+pipeline {
+
+    agent any
+
+    tools {
+        maven 'M3'
+    }
+
+    stages {
+
+        stage('Pull repository') {
+            steps {
+                deleteDir()
+                git "https://github.com/jenkins-docs/simple-java-maven-app.git"
+            }
+        }
+
+        stage('Update version') {
+            steps {
+                sh "mvn --batch-mode release:update-version -DdevelopmentVersion=1.2-SNAPSHOT"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                sh "mvn -Dmaven.repo.local=./mvn-repository clean package"
+            }
+        }
+
+        stage('Archive artifact') {
+            steps {
+                archiveArtifacts 'target/my-app-*.jar'
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
+
+    }
+
+}

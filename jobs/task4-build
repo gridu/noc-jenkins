@@ -1,0 +1,36 @@
+#!/usr/bin/env groovy
+
+pipeline {
+
+    agent any
+
+    tools {
+        maven 'M3'
+    }
+
+    stages {
+
+        stage('Pull repository') {
+            steps {
+                deleteDir()
+                git "https://github.com/gridu/noc-jenkins.git"
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('scritps'){
+                    sh "./get-groovy.sh"
+                }
+            }
+        }
+
+        stage('Cleanup') {
+            steps {
+                deleteDir()
+            }
+        }
+
+    }
+
+}

@@ -1,0 +1,15 @@
+version: '2'
+
+services:
+    jenkins:
+        build:
+            context: ./jenkins
+            args:
+                JENKINS_UID:  1000
+                JENKINS_GUID: 1000
+        image: docker.io/gd-ikharlamov/noc-jenkins:latest
+        container_name: noc-jenkins
+        ports:
+            - 8080:8080
+        # volumes:
+        #     - $PWD/data/:/var/jenkins/:z
